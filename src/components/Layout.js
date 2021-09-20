@@ -8,28 +8,49 @@ import { ListItemText } from '@material-ui/core';
 import { Drawer } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { useHistory,useLocation } from 'react-router-dom';
+import { AppBar } from '@material-ui/core';
+import { Toolbar } from '@material-ui/core';
+import { typography } from '@material-ui/system';
+import { format } from 'date-fns';
+import { Avatar } from '@material-ui/core';
 
 const drawerWidth = 240
 
 
 
-const useStyles = makeStyles({
-    page:{
-        background: '#f9f9f9',
-        width: '100%'
-    },
-    drawer:{
-        width: drawerWidth
-    },
-    drawer:{
-        width: drawerWidth
-    },
-    root:{
-        display: 'flex'
-    },
-    active:{
-        background: '#f4f4'
+const useStyles = makeStyles((theme) =>{
+    return{
+        page:{
+            background: '#f9f9f9',
+            width: '100%',
+            padding: theme.spacing(3)
+        },
+        drawer:{
+            width: drawerWidth
+        },
+        drawer:{
+            width: drawerWidth
+        },
+        root:{
+            display: 'flex'
+        },
+        active:{
+            background: '#f4f4'
+        },
+        appbar:{
+            width:`calc(100% - ${drawerWidth}px)`
+        },
+        toolbar: theme.mixins.toolbar,
+        date:{
+            flexGrow: 1
+        },
+        avatar:{
+            marginLeft: theme.spacing(2)
+        }
+
+    
     }
+    
 })
 
 function Layout(props) {
@@ -51,6 +72,21 @@ function Layout(props) {
     ]
     return (
        <div className={classes.root}>
+
+        <AppBar 
+          className={classes.appbar}
+          elevation={0}
+          >
+            <Toolbar>
+                <Typography className={classes.date}>
+                  Today is the {format(new Date(), 'do MMMM Y')}
+                </Typography>
+                <Typography>
+                    Mario
+                </Typography>
+                <Avatar src='/mario-av.png' className={classes.avatar}/>
+            </Toolbar>
+        </AppBar>
         
         <Drawer
         className={classes.drawer}
@@ -80,6 +116,7 @@ function Layout(props) {
         </Drawer>
 
         <div className={classes.page}>
+            <div className={classes.toolbar}></div>
             {props.children}
         </div>
         </div>
